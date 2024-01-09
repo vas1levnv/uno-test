@@ -1,2 +1,29 @@
 @import './base.css';
 
+#app {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.container {
+	width: 100%;
+	margin: 0 auto;
+	max-width: 1200px;
+	padding: 0 1rem;
+}
+
+a {
+	color: var(--green);
+	text-decoration: none;
+	transition: 0.2s ease;
+}
+
+a:hover {
+	color: var(--green-hover);
+}
+
+.error{
+	font-weight: 700;
+	color: darkred;
+}
