@@ -14,6 +14,9 @@
 			<div>{{ friend.name }}</div>
 		</RouterLink>
 	</div>
+	
+	<div>{{store.state.queryTextForFriends}}</div>
+	<div @click="store.commit('changeQueryTextForFriends', queryText)">btn</div>
 </template>
 
 <script lang="ts" setup>
@@ -22,11 +25,13 @@ import {computed, ref} from "vue";
 import axios from "axios";
 import CustomInput from "@/components/CustomInput.vue";
 import CustomButton from "@/components/CustomButton.vue";
+import store from "@/store/store";
 
 const friendsList: any = ref([])
 const queryText = ref('')
 const error = ref(null)
 const isShowContent = ref(false)
+
 
 const fetchFriendsFromApi = async () => {
 	try {
