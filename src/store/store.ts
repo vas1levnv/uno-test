@@ -1,5 +1,5 @@
+// @ts-ignore
 import {createStore} from "vuex";
-import router from "@/router";
 
 const store: object = createStore({
 	state() {
@@ -8,7 +8,7 @@ const store: object = createStore({
 		}
 	},
 	mutations: {
-		changeQueryTextForFriends(state, text) {
+		changeQueryTextForFriends(state: any, text: string) {
 			state.queryTextForFriends = text
 		},
 	},
