@@ -1,8 +1,9 @@
 <template>
-	<custom-button 
+	<custom-button
 			v-show="!isShowContent"
 			@click="fetchFriendsFromApi"
-	>Построить</custom-button>
+	>Построить
+	</custom-button>
 	<div class="friends-content" v-show="isShowContent">
 		<div class="friends-input">
 			<custom-input v-model="queryText"/>
@@ -11,11 +12,11 @@
 			{{ error }}
 		</div>
 		<RouterLink :to="'friends/' + friend.id" v-for="friend in searchedUsers">
-			<div>{{ friend.name }}</div>
+			<div :style="{background: `rgba(0,0,0, ${1-(0.1*friend.id)})`}">{{ friend.name }}</div>
 		</RouterLink>
 	</div>
-	
-	<div>{{store.state.queryTextForFriends}}</div>
+
+	<div>{{ store.state.queryTextForFriends }}</div>
 	<div @click="store.commit('changeQueryTextForFriends', queryText)">btn</div>
 </template>
 
