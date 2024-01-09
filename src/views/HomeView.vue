@@ -1,13 +1,11 @@
 <template>
-<div>Home</div>
+	<friends-list/>
 </template>
 
-<script>
-export default {
-	name: "HomeView"
-}
+<script setup lang="ts">
+import FriendsList from "@/components/FriendsList.vue";
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>
