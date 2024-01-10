@@ -4,14 +4,14 @@
 		{{ error }}
 	</div>
 	<div v-if="!isLoading">
-		<div>
+		<div style="margin: 2rem 0">
 			<div>{{ friend?.id }}</div>
 			<div>{{ friend?.name }}</div>
 			<div>{{ friend?.username }}</div>
 			<div>{{ friend?.email }}</div>
 			<div>{{ friend?.address?.street }}</div>
 		</div>
-		<custom-button v-if="isDelete" @click="store.getters.deleteFriend(friend.id);isShowModal =true;isDelete=false">
+		<custom-button v-if="isDelete" @click="handleDeleteUser(friend.id)">
 			Удалить пользователя
 		</custom-button>
 	</div>
@@ -52,12 +52,18 @@ const fetchFriendFromApi = async () => {
 		friend.value = response.data
 	} catch (err) {
 		const errors = err as Error | AxiosError;
-		if(!axios.isAxiosError(error)){
+		if (!axios.isAxiosError(error)) {
 			error.value = errors?.message
 		}
 	} finally {
 		isLoading.value = false
 	}
+}
+
+const handleDeleteUser = (id: string | number) => {
+	store.getters.deleteFriend(id);
+	isShowModal.value = true;
+	isDelete.value = false
 }
 
 onMounted(() => {

@@ -1,7 +1,7 @@
-// @ts-ignore
 import {createStore} from "vuex";
+import type {State} from "@/store/state";
 
-const store: object = createStore({
+const store: object = createStore<State>({
 	state() {
 		return {
 			queryTextForFriends: '',
@@ -26,7 +26,7 @@ const store: object = createStore({
 		fetchFriendsFromApi(state: any, data: Array<object>) {
 			state.friendsList = [...data]
 		},
-		changeShowContent(state:any, data: boolean){
+		changeShowContent(state: any, data: boolean) {
 			state.isShowContent = data
 		}
 	},
