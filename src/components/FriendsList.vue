@@ -1,11 +1,12 @@
 <template>
 	<custom-button
-			v-show="!store.state.isShowContent && !queryText"
-			@click="fetchFriendsFromApi"
+		v-show="!store.state.isShowContent && !queryText"
+		@click="fetchFriendsFromApi"
 	>Построить
 	</custom-button>
 	<div class="friends-content" v-show="store.state.isShowContent">
 		<div class="friends-input">
+			<div>{{queryText}}</div>
 			<custom-input @input="store.commit('changeQueryTextForFriends', queryText)" v-model="queryText"/>
 		</div>
 		<div v-show="error" class="error">
@@ -14,7 +15,7 @@
 		<div v-show="isLoading">
 			Идет загрузка...
 		</div>
-
+		
 		<RouterLink v-show="!isLoading " :to="'friends/' + friend.id" v-for="friend in searchedUsers">
 			<div class="friends-item">
 				<div>{{ friend.name }}</div>
