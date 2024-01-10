@@ -1,8 +1,11 @@
 <template>
+	
+	<RouterLink to="/">Назад</RouterLink>
+	
 	<div class="error">
 		{{ error }}
 	</div>
-	<div>
+	<div v-if="!isLoading">
 		<div>
 			<div>{{ friend?.id }}</div>
 			<div>{{ friend?.name }}</div>
@@ -11,6 +14,9 @@
 			<div>{{ friend?.address?.street }}</div>
 		</div>
 		<custom-button @click="store.getters.deleteFriend(friend.id)">Удалить пользователя</custom-button>
+	</div>
+	<div v-else>
+		Идет загрузка...
 	</div>
 </template>
 
@@ -25,14 +31,19 @@ const route = useRoute()
 const id: any = route.params.id
 const friend: object = ref(null)
 const error = ref('')
+const isLoading = ref(false)
 
 const fetchFriendFromApi = async () => {
 	try {
+		isLoading.value = true
 		const response: object = await axios.get('https://jsonplaceholder.typicode.com/users/' + id)
-		new Promise((resolve) => setTimeout(resolve, 1000))
+		await new Promise((resolve) => setTimeout(resolve, 1000))
 		friend.value = response.data
 	} catch (e) {
-		error.value = e.message
+		error.value = e?.message
+	}
+	finally {
+		isLoading.value = false
 	}
 }
 

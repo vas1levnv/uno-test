@@ -11,12 +11,17 @@
 		<div v-show="error" class="error">
 			{{ error }}
 		</div>
-		<RouterLink :to="'friends/' + friend.id" v-for="friend in searchedUsers">
+		<div v-show="isLoading">
+			Идет загрузка...
+		</div>
+		
+		<RouterLink v-show="!isLoading " :to="'friends/' + friend.id" v-for="friend in searchedUsers">
 			<div class="friends-item">
 				<div>{{ friend.name }}</div>
 				<div class="friends-item__bg" :style="{opacity: 1-(0.1*friend.id)}"></div>
 			</div>
 		</RouterLink>
+		<div v-show="searchedUsers.length === 0">Пользователь с таким именем не найден...</div>
 	</div>
 </template>
 
@@ -30,17 +35,21 @@ import store from "@/store/store";
 
 const queryText = store.state.queryTextForFriends
 const error = ref(null)
+const isLoading = ref(false)
 
 
 const fetchFriendsFromApi = async () => {
 	try {
+		isLoading.value = true
 		store.commit('changeShowContent', true)
 		const response: object = await axios.get('https://jsonplaceholder.typicode.com/users')
-		new Promise((resolve) => setTimeout(resolve, 1000))
+		await new Promise((resolve) => setTimeout(resolve, 1000))
 		store.commit('fetchFriendsFromApi', response.data)
 	} catch (e) {
 		error.value = e?.message
 		store.commit('changeShowContent', false)
+	} finally {
+		isLoading.value = false
 	}
 }
 
