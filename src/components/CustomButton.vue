@@ -5,9 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
-	modelValue: {type: String, required: true},
-})
 
 </script>
 

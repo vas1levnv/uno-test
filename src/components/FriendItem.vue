@@ -44,6 +44,14 @@ interface ResponseData {
 	data: object
 }
 
+interface Friend {
+	id: number | string,
+	name: string,
+	username: string,
+	email: string,
+	address: object,
+}
+
 const fetchFriendFromApi = async () => {
 	try {
 		isLoading.value = true
