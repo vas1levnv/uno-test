@@ -21,7 +21,7 @@
 				<div class="friends-item__bg" :style="{opacity: 1-(0.1*friend.id)}"></div>
 			</div>
 		</RouterLink>
-		<div v-show="searchedUsers.length === 0">Пользователь с таким именем не найден...</div>
+		<div v-show="searchedUsers.length === 0 && !isLoading">Пользователь с таким именем не найден...</div>
 	</div>
 </template>
 
