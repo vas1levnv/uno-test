@@ -3,11 +3,14 @@
 		{{ error }}
 	</div>
 	<div>
-		<div>{{ friend?.id }}</div>
-		<div>{{ friend?.name }}</div>
-		<div>{{ friend?.username }}</div>
-		<div>{{ friend?.email }}</div>
-		<div>{{ friend?.address?.street }}</div>
+		<div>
+			<div>{{ friend?.id }}</div>
+			<div>{{ friend?.name }}</div>
+			<div>{{ friend?.username }}</div>
+			<div>{{ friend?.email }}</div>
+			<div>{{ friend?.address?.street }}</div>
+		</div>
+		<custom-button @click="store.getters.deleteFriend(friend.id)">Удалить пользователя</custom-button>
 	</div>
 </template>
 
@@ -15,6 +18,8 @@
 import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
 import axios from "axios";
+import CustomButton from "@/components/CustomButton.vue";
+import store from "@/store/store";
 
 const route = useRoute()
 const id: any = route.params.id

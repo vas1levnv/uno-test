@@ -1,12 +1,12 @@
 <template>
 	<custom-button
-		v-show="!isShowContent"
+		v-show="!store.state.isShowContent && !queryText"
 		@click="fetchFriendsFromApi"
 	>Построить
 	</custom-button>
-	<div class="friends-content" v-show="isShowContent">
+	<div class="friends-content" v-show="store.state.isShowContent">
 		<div class="friends-input">
-			<custom-input v-model="queryText"/>
+			<custom-input @input="store.commit('changeQueryTextForFriends', queryText)" v-model="queryText"/>
 		</div>
 		<div v-show="error" class="error">
 			{{ error }}
@@ -18,9 +18,6 @@
 			</div>
 		</RouterLink>
 	</div>
-	
-	<div>{{ store.state.queryTextForFriends }}</div>
-	<div @click="store.commit('changeQueryTextForFriends', queryText)">btn</div>
 </template>
 
 <script lang="ts" setup>
@@ -31,20 +28,19 @@ import CustomInput from "@/components/CustomInput.vue";
 import CustomButton from "@/components/CustomButton.vue";
 import store from "@/store/store";
 
-const queryText = ref('')
+const queryText = store.state.queryTextForFriends
 const error = ref(null)
-const isShowContent = ref(false)
 
 
 const fetchFriendsFromApi = async () => {
 	try {
-		isShowContent.value = true
+		store.commit('changeShowContent', true)
 		const response: object = await axios.get('https://jsonplaceholder.typicode.com/users')
 		new Promise((resolve) => setTimeout(resolve, 1000))
 		store.commit('fetchFriendsFromApi', response.data)
 	} catch (e) {
-		error.value = e?.message 
-		isShowContent.value = false
+		error.value = e?.message
+		store.commit('changeShowContent', false)
 	}
 }
 
