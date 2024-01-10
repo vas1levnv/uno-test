@@ -1,7 +1,7 @@
 <template>
 	<custom-button
-		v-show="!store.state.isShowContent && !queryText"
-		@click="fetchFriendsFromApi"
+			v-show="!store.state.isShowContent && !queryText"
+			@click="fetchFriendsFromApi"
 	>Построить
 	</custom-button>
 	<div class="friends-content" v-show="store.state.isShowContent">
@@ -14,7 +14,7 @@
 		<div v-show="isLoading">
 			Идет загрузка...
 		</div>
-		
+
 		<RouterLink v-show="!isLoading " :to="'friends/' + friend.id" v-for="friend in searchedUsers">
 			<div class="friends-item">
 				<div>{{ friend.name }}</div>
@@ -28,13 +28,14 @@
 <script lang="ts" setup>
 
 import {computed, ref} from "vue";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import CustomInput from "@/components/CustomInput.vue";
 import CustomButton from "@/components/CustomButton.vue";
 import store from "@/store/store";
+import type {ResponseData} from "@/store/state";
 
 const queryText = store.state.queryTextForFriends
-const error = ref(null)
+const error = ref<any>('')
 const isLoading = ref(false)
 
 
@@ -42,18 +43,20 @@ const fetchFriendsFromApi = async () => {
 	try {
 		isLoading.value = true
 		store.commit('changeShowContent', true)
-		const response: object = await axios.get('https://jsonplaceholder.typicode.com/users')
+		const response: ResponseData = await axios.get('https://jsonplaceholder.typicode.com/users')
 		await new Promise((resolve) => setTimeout(resolve, 1000))
 		store.commit('fetchFriendsFromApi', response.data)
-	} catch (e) {
-		error.value = e?.message
-		store.commit('changeShowContent', false)
+	} catch (err) {
+		const errors = err as Error | AxiosError;
+		if (!axios.isAxiosError(error)) {
+			error.value = errors?.message
+		}
 	} finally {
 		isLoading.value = false
 	}
 }
 
-const searchedUsers = computed((): void => {
+const searchedUsers: any = computed((): void => {
 	return store.getters.filterFriendsList
 })
 </script>

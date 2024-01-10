@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import type {State} from "@/store/state";
+import type {Friend, State} from "@/store/state";
 
 
 const store = createStore<State>({
@@ -8,6 +8,15 @@ const store = createStore<State>({
 			queryTextForFriends: '',
 			friendsList: [],
 			isShowContent: false,
+			friend: {
+				id: '',
+				name: '',
+				email: '',
+				username: '',
+				address: {
+					street: ''
+				}
+			}
 		}
 	},
 	getters: {
@@ -26,6 +35,14 @@ const store = createStore<State>({
 		},
 		fetchFriendsFromApi(state: any, data: Array<object>) {
 			state.friendsList = [...data]
+		},
+
+		fetchFriendItemFromApi(state: any, data: Friend) {
+			state.friend.id = data.id
+			state.friend.name = data.name
+			state.friend.email = data.email
+			state.friend.username = data.username
+			state.friend.address.street = data.address.street
 		},
 		changeShowContent(state: any, data: boolean) {
 			state.isShowContent = data
