@@ -1,11 +1,9 @@
 <template>
-<div>About</div>
+  <div>About</div>
 </template>
 
-<script>
-export default {
-	name: "HomeView"
-}
+<script lang="ts" setup>
+
 </script>
 
 <style scoped>
