@@ -31,7 +31,6 @@ import CustomInput from "@/components/CustomInput.vue";
 import CustomButton from "@/components/CustomButton.vue";
 import store from "@/store/store";
 
-const friendsList: any = ref([])
 const queryText = ref('')
 const error = ref(null)
 const isShowContent = ref(false)
@@ -42,15 +41,15 @@ const fetchFriendsFromApi = async () => {
 		isShowContent.value = true
 		const response: object = await axios.get('https://jsonplaceholder.typicode.com/users')
 		new Promise((resolve) => setTimeout(resolve, 1000))
-		friendsList.value = response.data
+		store.commit('fetchFriendsFromApi', response.data)
 	} catch (e) {
-		error.value = e.message
+		error.value = e?.message 
 		isShowContent.value = false
 	}
 }
 
 const searchedUsers = computed((): void => {
-	return friendsList.value.filter(user => user.name.toLowerCase().includes(queryText.value.toLowerCase()))
+	return store.getters.filterFriendsList
 })
 </script>
 
