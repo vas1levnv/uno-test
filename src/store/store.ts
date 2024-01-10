@@ -2,7 +2,7 @@ import {createStore} from "vuex";
 import type {State} from "@/store/state";
 
 
-const store: object = createStore<State>({
+const store = createStore<State>({
 	state() {
 		return {
 			queryTextForFriends: '',
