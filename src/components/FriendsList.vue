@@ -1,7 +1,7 @@
 <template>
 	<custom-button
-			v-show="!isShowContent"
-			@click="fetchFriendsFromApi"
+		v-show="!isShowContent"
+		@click="fetchFriendsFromApi"
 	>Построить
 	</custom-button>
 	<div class="friends-content" v-show="isShowContent">
@@ -12,10 +12,13 @@
 			{{ error }}
 		</div>
 		<RouterLink :to="'friends/' + friend.id" v-for="friend in searchedUsers">
-			<div :style="{background: `rgba(0,0,0, ${1-(0.1*friend.id)})`}">{{ friend.name }}</div>
+			<div class="friends-item">
+				<div>{{ friend.name }}</div>
+				<div class="friends-item__bg" :style="{opacity: 1-(0.1*friend.id)}"></div>
+			</div>
 		</RouterLink>
 	</div>
-
+	
 	<div>{{ store.state.queryTextForFriends }}</div>
 	<div @click="store.commit('changeQueryTextForFriends', queryText)">btn</div>
 </template>
@@ -55,6 +58,24 @@ const searchedUsers = computed((): void => {
 .friends {
 	&-input {
 		margin-bottom: 1rem;
+	}
+	
+	&-item {
+		position: relative;
+		padding: 0.5rem 1rem;
+		border-radius: 0.25rem;
+		margin-bottom: 1rem;
+		overflow: hidden;
+		
+		&__bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+			background: var(--vt-c-indigo);
+		}
 	}
 }
 </style>
