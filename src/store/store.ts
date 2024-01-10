@@ -1,6 +1,7 @@
 import {createStore} from "vuex";
 import type {State} from "@/store/state";
 
+
 const store: object = createStore<State>({
 	state() {
 		return {
@@ -10,11 +11,11 @@ const store: object = createStore<State>({
 		}
 	},
 	getters: {
-		filterFriendsList: (state: Array<object>) => {
-			return state.friendsList.filter((user: object) => user.name.toLowerCase().includes(state.queryTextForFriends.toLowerCase()))
+		filterFriendsList: (state: State) => {
+			return state.friendsList.filter((user: any) => user.name.toLowerCase().includes(state.queryTextForFriends.toLowerCase()))
 		},
-		deleteFriend: (state: Array<object>) => (id: number) => {
-			state.friendsList = [...state.friendsList].filter((user: object) => user.id !== id)
+		deleteFriend: (state: State) => (id: number) => {
+			state.friendsList = [...state.friendsList].filter((user: any) => user.id !== id)
 		}
 	},
 
