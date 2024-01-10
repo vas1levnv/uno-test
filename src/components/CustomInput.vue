@@ -1,11 +1,17 @@
 <template>
-	<input type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
+	<input type="text" :value="modelValue" @input="handleInput">
 </template>
 
 <script lang="ts" setup>
 const props = defineProps({
 	modelValue: String,
 })
+
+const emit = defineEmits()
+
+const handleInput = (event:Event)=>{
+  emit('update:modelValue', (event.target as HTMLInputElement).value)
+}
 
 </script>
 
