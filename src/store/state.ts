@@ -1,11 +1,8 @@
-export interface State {
-	queryTextForFriends: string,
-	friendsList: Array<Friend>,
-	isShowContent: boolean,
-	friend: Friend,
+export interface Address {
+	street: string,
 }
 
-export interface  Friend {
+export interface Friend {
 	id: string | number,
 	name: string,
 	email: string,
@@ -13,9 +10,13 @@ export interface  Friend {
 	address: Address,
 }
 
-export interface  Address {
-	street: string,
+export interface State {
+	queryTextForFriends: string,
+	friendsList: Array<Friend>,
+	isShowContent: boolean,
+	friend: Friend,
 }
+
 
 export interface ResponseData {
 	data: object

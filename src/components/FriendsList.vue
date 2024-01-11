@@ -6,8 +6,7 @@
 	</custom-button>
 	<div class="friends-content" v-show="store.state.isShowContent">
 		<div class="friends-input">
-			<div>{{queryText}}</div>
-			<custom-input @input="store.commit('changeQueryTextForFriends', queryText)" v-model="queryText"/>
+			<custom-input v-model="queryText"/>
 		</div>
 		<div v-show="error" class="error">
 			{{ error }}
@@ -35,7 +34,6 @@ import CustomButton from "@/components/CustomButton.vue";
 import store from "@/store/store";
 import type {ResponseData} from "@/store/state";
 
-const queryText = store.state.queryTextForFriends
 const error = ref<any>('')
 const isLoading = ref(false)
 
@@ -60,6 +58,16 @@ const fetchFriendsFromApi = async () => {
 const searchedUsers: any = computed((): void => {
 	return store.getters.filterFriendsList
 })
+
+const queryText = computed({
+	get() {
+		return store.state.queryTextForFriends
+	},
+	set(value) {
+		store.commit('changeQueryTextForFriends', value)
+	}
+})
+
 </script>
 
 <style scoped lang="scss">
